@@ -1,0 +1,131 @@
+package ui;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import exceptions.InvalidKeyFileException;
+import exceptions.PdfFileOpeningException;
+import exceptions.SignatureVerificationException;
+import service.key_loading.KeyLoader;
+import service.key_loading.LocalKeyLoader;
+import ui.file_loader.PdfFileLoadTester;
+import service.Verifier;
+import ui.file_loader.FileLoaderComponent;
+
+import java.awt.*;
+import java.security.InvalidKeyException;
+
+public class VerifyFrame extends JFrame {
+    private FileLoaderComponent pdfLoader;
+    private FileLoaderComponent keyFileLoader;
+    private JButton verifyButton;
+    private JButton backButton;
+    private JTextArea aboutText;
+    private final Verifier verifier;
+    private final KeyLoader keyLoader;
+
+    public VerifyFrame() {
+        verifier = new Verifier();
+        keyLoader = new LocalKeyLoader();
+
+        // Build the frame
+        initializeComponents();
+        setupComponents();
+        setTitle("Digital Signature Application");
+        setSize(500, 200);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+    }
+
+    private void setupComponents() {
+        // Set frame layout
+        setLayout(new BorderLayout());
+
+        // Add components
+        add(aboutText, BorderLayout.CENTER);
+
+        JPanel fileLoadersPanel = new JPanel();
+        fileLoadersPanel.setLayout(new GridLayout(2, 1));
+        fileLoadersPanel.add(pdfLoader);
+        fileLoadersPanel.add(keyFileLoader);
+        add(fileLoadersPanel, BorderLayout.NORTH);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.add(verifyButton);
+        buttonPanel.add(backButton);
+        add(buttonPanel, BorderLayout.SOUTH);
+    }
+
+    private void initializeComponents() {
+        pdfLoader = new FileLoaderComponent("Load signed PDF",
+                new FileNameExtensionFilter("PDF files", "pdf"),
+                new PdfFileLoadTester());
+        keyFileLoader = new FileLoaderComponent("Load public key",
+                new FileNameExtensionFilter("PEM files", "pem"),
+                file -> {
+                    try {
+                        keyLoader.loadPublicKey(file);
+                        return true;
+                    } catch (Exception e) {
+                        return false;
+                    }
+                });
+        verifyButton = new JButton("Verify signature");
+        verifyButton.addActionListener(e -> {
+            if (pdfLoader.getFile() == null || keyFileLoader.getFile() == null) {
+                reportError("Please select both a valid PDF file AND a valid public key file");
+                return;
+            }
+
+            int result = verifyDocument();
+            if (result == 1) {
+                // 1 means the signature is valid
+                JOptionPane.showMessageDialog(this, "The signature is valid", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else if (result == 0) {
+                // 0 means the signature is invalid
+                JOptionPane.showMessageDialog(this, "The signature is invalid", "Failure", JOptionPane.ERROR_MESSAGE);
+            }  // -1 means an error occurred, and the error message has already been shown
+        });
+        backButton = new JButton("Back");
+        backButton.addActionListener(e -> {
+            MainFrame mainFrame = new MainFrame();
+            mainFrame.setVisible(true);
+            dispose();
+        });
+        aboutText = new JTextArea("This application allows you to verify the signature of a signed PDF document using a public key.");
+        aboutText.setEditable(false);
+    }
+
+    private int verifyDocument() {
+        try {
+            if (verifier.verify(pdfLoader.getFile(),
+                                keyLoader.loadPublicKey(keyFileLoader.getFile()))) {
+                return 1;
+            } else {
+                return 0;
+            }
+        } catch (InvalidKeyFileException e) {
+            keyFileLoader.invalidateFile();
+            reportError("Couldn't read the public key from provided file: " + keyFileLoader.getFile().getName() + "\n" + e.getMessage());
+            return -1;
+        } catch (PdfFileOpeningException e) {
+            pdfLoader.invalidateFile();
+            reportError("Couldn't open provided PDF file: " + pdfLoader.getFile().getName() + "\n" + e.getMessage());
+            return -1;
+        } catch (InvalidKeyException e) {
+            reportError("The provided key is invalid. Maybe the format is incorrect?\n" + e.getMessage());
+            return -1;
+        } catch (SignatureVerificationException e) {
+            reportError("Couldn't verify the provided PDF file with the provided key\n" + e.getMessage());
+            return -1;
+        } catch (Exception e) {
+            reportError("An unexpected error occurred\n" + e.getMessage());
+            return -1;
+        }
+    }
+
+    private void reportError(String message) {
+        JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
