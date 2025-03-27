@@ -17,28 +17,50 @@ import exceptions.SignatureVerificationException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.interactive.digitalsignature.PDSignature;
 
+/**
+ * \class Verifier
+ * \brief Service class for verifying signatures in PDF documents.
+ *
+ * This class provides functionality to verify signatures in PDF documents using a specified public key.
+ */
 public class Verifier {
     public static final int KEY_SIZE = 1024;
     public static final String ALGORITHM = "SHA256withRSA";
 
-    public boolean verify(File pdfFile, PublicKey publicKey)
+    /**
+     * \brief Verifies the signature of a PDF file with the given public key.
+     *
+     * \param inputDoc The PDF file to be verified.
+     * \param key The file containing the public key to be used for verification.
+     *
+     * \return true if the signature is valid, false otherwise.
+     *
+     * \throws InvalidKeyException If the provided public key is invalid.
+     * \throws SignatureVerificationException If an error occurs during the signature verification process.
+     * \throws PdfFileOpeningException If the PDF file cannot be opened.
+     * \throws PdfFileReadingException If the PDF file cannot be read.
+     * \throws RuntimeException If the signature algorithm is not available (should never happen).
+     * \throws IllegalStateException If any of the required input parameters are null.
+     */
+    public static boolean verify(File inputDoc, PublicKey key)
             throws InvalidKeyException, SignatureVerificationException, PdfFileOpeningException, PdfFileReadingException {
-        if (pdfFile == null || publicKey == null) {
-            throw new IllegalStateException("Both pdfFile and publicKey must be supplied before verifying");
+        if (inputDoc == null || key == null) {
+            throw new IllegalStateException("Both inputDoc and key must be supplied before verifying");
         }
 
-        try (PDDocument doc = PdfLoaderWrapper.loadPDF(pdfFile)) {
+        try (PDDocument doc = PdfLoaderWrapper.loadPDF(inputDoc)) {
             PDSignature signature = doc.getSignatureDictionaries().getFirst();
-            byte[] signatureBytes = Arrays.copyOfRange(signature.getContents(), 0, KEY_SIZE / 8);   // Contents field is 96 bytes long, but we only need the first KEY_SIZE bytes
+            byte[] signatureBytes = Arrays.copyOfRange(signature.getContents(), 0, KEY_SIZE / 8);
+            // Contents field is always 96 bytes long, but we only need the first KEY_SIZE bytes
 
             java.security.Signature signatureVerifier = java.security.Signature.getInstance(ALGORITHM);
-            signatureVerifier.initVerify(publicKey);
+            signatureVerifier.initVerify(key);
             try {
-                ByteArrayInputStream bis = new ByteArrayInputStream(Files.readAllBytes(pdfFile.toPath()));
+                ByteArrayInputStream bis = new ByteArrayInputStream(Files.readAllBytes(inputDoc.toPath()));
                 signatureVerifier.update(signature.getSignedContent(bis));
                 return signatureVerifier.verify(signatureBytes);
             } catch (IOException e) {
-                throw new PdfFileReadingException("Couldn't read: " + pdfFile.getName(), e);
+                throw new PdfFileReadingException("Couldn't read: " + inputDoc.getName(), e);
             }
         } catch (PdfFileOpeningException e) {
             // rethrown to inform the caller that the PDF file could not be opened

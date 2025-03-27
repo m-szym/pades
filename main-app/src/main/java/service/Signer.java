@@ -12,24 +12,47 @@ import java.security.SignatureException;
 import org.apache.pdfbox.pdmodel.interactive.digitalsignature.PDSignature;
 import org.apache.pdfbox.pdmodel.interactive.digitalsignature.SignatureInterface;
 
+/**
+ * \class Signer
+ * \brief Service class for signing PDF documents with RSA private keys.
+ *
+ * This class provides functionality to sign PDF documents using provided RSA private key and configured signature object.
+ * It handles the signing process, including loading the PDF document, applying the signature, and saving the signed document.
+ */
 public class Signer {
-    private static final String SIGNATURE_ALGORITHM = "SHA256withRSA";
+    private static final String SIGNATURE_ALGORITHM = "SHA256withRSA";  /**< Algorithm used for signing the PDF. */
 
-    public void sign(File pdfFile,
-                     PrivateKey privateKey,
+    /**
+     * \brief Signs a PDF file with the given private key and signature.
+     *
+     * \param inputDoc The PDF file to be signed.
+     * \param key The file containing the private key to be used for signing.
+     * \param signature The configured signature to be applied to the PDF.
+     * \param outputDoc The output file where the signed PDF will be saved.
+     *
+     * \throws SigningException If an error occurs during the signing process.
+     * \throws InvalidKeyException If the provided private key is invalid.
+     * \throws PdfFileOpeningException If the PDF file cannot be opened.
+     * \throws PdfFileSavingException If the PDF file cannot be saved.
+     * \throws FileNotFoundException If the output file cannot be found.
+     * \throws IllegalStateException If any of the required input parameters are null.
+     * \throws RunTimeException If the signing algorithm is not available (should never happen).
+     */
+    public static void sign(File inputDoc,
+                     PrivateKey key,
                      PDSignature signature,
-                     File outputFile)
+                     File outputDoc)
             throws SigningException, InvalidKeyException, PdfFileOpeningException, PdfFileSavingException, FileNotFoundException {
-        if (pdfFile == null || privateKey == null || signature == null) {
-            throw new IllegalStateException("pdfFile, privateKey and signature must be set before signing");
+        if (inputDoc == null || key == null || signature == null || outputDoc == null) {
+            throw new IllegalStateException("inputDoc, key, signature and outputDoc must not be NULL");
         }
 
-        try (PDDocument doc = PdfLoaderWrapper.loadPDF(pdfFile)) {
+        try (PDDocument doc = PdfLoaderWrapper.loadPDF(inputDoc)) {
             // Create interface that will sign the document
             SignatureInterface signer = content -> {
                 try {
                     java.security.Signature signature1 = java.security.Signature.getInstance(SIGNATURE_ALGORITHM);
-                    signature1.initSign(privateKey);
+                    signature1.initSign(key);
                     signature1.update(content.readAllBytes());
                     return signature1.sign();
                 } catch (NoSuchAlgorithmException e) {
@@ -53,7 +76,7 @@ public class Signer {
                 doc.addSignature(signature, signer);
                 // Save the signed document
                 try {
-                    doc.saveIncremental(new FileOutputStream(outputFile));
+                    doc.saveIncremental(new FileOutputStream(outputDoc));
                 } catch (FileNotFoundException e) {
                     // rethrown to get around the IOException from the saveIncremental method and bring the FileNotFoundException to the caller
                     throw e;

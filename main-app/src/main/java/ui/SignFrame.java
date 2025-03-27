@@ -18,18 +18,27 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.security.InvalidKeyException;
 
+/**
+ * \class SignFrame
+ * \brief Frame for signing PDF documents.
+ *
+ * This class represents a window where users can load a PDF and a private key to sign the document.
+ */
 public class SignFrame extends JFrame {
     private FileLoaderComponent inputPdfFileLoader;
     private FileLoaderComponent keyFileLoader;
     private JButton signButton;
     private JButton backButton;
     private JTextArea aboutText;
-    private final Signer signer;
     private final KeyLoader keyLoader;
     private String privateKeyPIN;
 
+    /**
+     * \brief Constructor for SignFrame.
+     *
+     * Initializes the components and builds the frame.
+     */
     public SignFrame() {
-        signer = new Signer();
         keyLoader = new LocalKeyLoader();
         privateKeyPIN = "";
 
@@ -41,6 +50,11 @@ public class SignFrame extends JFrame {
         setLocationRelativeTo(null);
     }
 
+    /**
+     * \brief Builds the frame layout.
+     *
+     * Sets the layout of the frame and adds the components.
+     */
     private void buildFrame() {
         // Set frame layout
         setLayout(new BorderLayout());
@@ -61,6 +75,11 @@ public class SignFrame extends JFrame {
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * \brief Initializes the components of the frame.
+     *
+     * Creates and configures the file loaders, buttons, and text area.
+     */
     private void initializeComponents() {
         inputPdfFileLoader = new FileLoaderComponent("Load PDF to sign",
                 new FileNameExtensionFilter("PDF files", "pdf"),
@@ -104,14 +123,22 @@ public class SignFrame extends JFrame {
         aboutText.setEditable(false);
     }
 
+    /**
+     * \brief Signs the loaded PDF file and saves it to the specified output file.
+     * Any errors during the signing process are reported to the user using the reportError method.
+     * \param outputFile The file to save the signed PDF.
+     * \return true if the signing is successful, false otherwise.
+     */
     private boolean sign(File outputFile) {
         try {
+            // create and configure the signature
             PDSignature signature = new PDSignature();
             signature.setName("SIG TEST");
             signature.setFilter(PDSignature.FILTER_ADOBE_PPKLITE);
             signature.setSubFilter(PDSignature.SUBFILTER_ADBE_PKCS7_DETACHED);
 
-            signer.sign(inputPdfFileLoader.getFile(),
+            // sign the file
+            Signer.sign(inputPdfFileLoader.getFile(),
                     keyLoader.loadPrivateKey(keyFileLoader.getFile(), privateKeyPIN),
                     signature,
                     outputFile);
@@ -137,6 +164,10 @@ public class SignFrame extends JFrame {
         return false;
     }
 
+    /**
+     * \brief Reports an error message to the user using a dialog.
+     * \param message The error message to be displayed.
+     */
     private void reportError(String message) {
         JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
     }

@@ -3,11 +3,22 @@ package ui;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * \class MainFrame
+ * \brief Main application window for the Digital Signature Application.
+ *
+ * This class represents the main window of the application, providing buttons to sign and verify documents.
+ */
 public class MainFrame extends JFrame {
     private JButton signDocumentButton;
     private JButton verifyDocumentButton;
     private JTextArea aboutText;
 
+    /**
+     * \brief Constructor for MainFrame.
+     *
+     * Initializes the components and builds the frame.
+     */
     public MainFrame() {
         initializeComponents();
         buildFrame();
@@ -17,6 +28,11 @@ public class MainFrame extends JFrame {
         setLocationRelativeTo(null);
     }
 
+    /**
+     * \brief Builds the frame layout.
+     *
+     * Sets the layout of the frame and adds the components.
+     */
     private void buildFrame() {
         setLayout(new BorderLayout());
 
@@ -36,6 +52,11 @@ public class MainFrame extends JFrame {
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * \brief Initializes the components of the frame.
+     *
+     * Creates and configures the buttons and text area.
+     */
     private void initializeComponents() {
         signDocumentButton = new JButton("Sign Document");
         signDocumentButton.addActionListener(e -> {

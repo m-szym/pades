@@ -15,17 +15,26 @@ import ui.file_loader.FileLoaderComponent;
 import java.awt.*;
 import java.security.InvalidKeyException;
 
+/**
+ * \class VerifyFrame
+ * \brief Frame for verifying signatures of PDF documents.
+ *
+ * This class represents a window where users can load a signed PDF and a public key to verify the document's signature.
+ */
 public class VerifyFrame extends JFrame {
     private FileLoaderComponent pdfLoader;
     private FileLoaderComponent keyFileLoader;
     private JButton verifyButton;
     private JButton backButton;
     private JTextArea aboutText;
-    private final Verifier verifier;
     private final KeyLoader keyLoader;
 
+    /**
+     * \brief Constructor for VerifyFrame.
+     *
+     * Initializes the components and builds the frame.
+     */
     public VerifyFrame() {
-        verifier = new Verifier();
         keyLoader = new LocalKeyLoader();
 
         // Build the frame
@@ -37,6 +46,11 @@ public class VerifyFrame extends JFrame {
         setLocationRelativeTo(null);
     }
 
+    /**
+     * \brief Sets up the components of the frame.
+     *
+     * Configures the layout and adds the components to the frame.
+     */
     private void setupComponents() {
         // Set frame layout
         setLayout(new BorderLayout());
@@ -57,6 +71,11 @@ public class VerifyFrame extends JFrame {
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * \brief Initializes the components of the frame.
+     *
+     * Creates and configures the file loaders, buttons, and text area.
+     */
     private void initializeComponents() {
         pdfLoader = new FileLoaderComponent("Load signed PDF",
                 new FileNameExtensionFilter("PDF files", "pdf"),
@@ -97,9 +116,14 @@ public class VerifyFrame extends JFrame {
         aboutText.setEditable(false);
     }
 
+    /**
+     * \brief Verifies the signature of the loaded PDF file.
+     * Any errors encountered during the verification process are reported to the user.
+     * \return 1 if the signature is valid, 0 if the signature is invalid, -1 if an error occurred.
+     */
     private int verifyDocument() {
         try {
-            if (verifier.verify(pdfLoader.getFile(),
+            if (Verifier.verify(pdfLoader.getFile(),
                                 keyLoader.loadPublicKey(keyFileLoader.getFile()))) {
                 return 1;
             } else {
@@ -125,6 +149,10 @@ public class VerifyFrame extends JFrame {
         }
     }
 
+    /**
+     * \brief Reports an error message to the user using a dialog.
+     * \param message The error message to be displayed.
+     */
     private void reportError(String message) {
         JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
