@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example._2ndapp.GUIController">
+    <Label text="Key Generator Application" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+    <TextField fx:id="pinField" promptText="Enter PIN" />
+    <Button text="Generate &amp; Save Keys" onAction="#handleGenerateKeys" />
+    <Label fx:id="statusLabel" text="Status: Waiting..." />
+</VBox>
