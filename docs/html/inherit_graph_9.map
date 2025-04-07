@@ -1,0 +1,11 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,109,147,134"/>
+<area shape="rect" id="Node000001" href="$classexceptions_1_1PdfFileReadingException.html" title="Exception thrown when Apache PDFBox encounters an issue while reading a PDF file." alt="" coords="213,5,408,45"/>
+<area shape="poly" id="edge8_Node000000_Node000001" title=" " alt="" coords="108,99,148,76,194,55,227,43,229,48,196,60,151,81,111,104"/>
+<area shape="rect" id="Node000002" href="$classexceptions_1_1PdfFileSavingException.html" title="Exception thrown when there is an issue saving a PDF file with Apache PDFBox." alt="" coords="218,69,403,109"/>
+<area shape="poly" id="edge9_Node000000_Node000002" title=" " alt="" coords="160,107,217,99,218,105,161,113"/>
+<area shape="rect" id="Node000003" href="$classexceptions_1_1SignatureVerificationException.html" title="Exception thrown when there is an issue verifying digital signature." alt="" coords="195,133,427,173"/>
+<area shape="poly" id="edge10_Node000000_Node000003" title=" " alt="" coords="161,130,195,135,194,140,160,135"/>
+<area shape="rect" id="Node000004" href="$classexceptions_1_1SigningException.html" title="Exception thrown when there is an issue during the signing process." alt="" coords="206,198,415,223"/>
+<area shape="poly" id="edge11_Node000000_Node000004" title=" " alt="" coords="110,139,150,162,196,183,238,195,236,200,194,188,148,167,107,144"/>
+</map>

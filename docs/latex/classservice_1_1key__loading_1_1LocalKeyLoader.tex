@@ -1,0 +1,103 @@
+\doxysection{service.\+key\+\_\+loading.\+Local\+Key\+Loader Class Reference}
+\hypertarget{classservice_1_1key__loading_1_1LocalKeyLoader}{}\label{classservice_1_1key__loading_1_1LocalKeyLoader}\index{service.key\_loading.LocalKeyLoader@{service.key\_loading.LocalKeyLoader}}
+
+
+Implementation of Key\+Loader interface for loading keys from PEM files.  
+
+
+
+
+Inheritance diagram for service.\+key\+\_\+loading.\+Local\+Key\+Loader\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=247pt]{classservice_1_1key__loading_1_1LocalKeyLoader__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for service.\+key\+\_\+loading.\+Local\+Key\+Loader\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=247pt]{classservice_1_1key__loading_1_1LocalKeyLoader__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Private\+Key \mbox{\hyperlink{classservice_1_1key__loading_1_1LocalKeyLoader_a9507a66b785c11a0694f797796069f8c}{load\+Private\+Key}} (File file, String pin)  throws Invalid\+Key\+File\+Exception 
+\begin{DoxyCompactList}\small\item\em Loads a private key from the specified file using the provided PIN. \end{DoxyCompactList}\item 
+Public\+Key \mbox{\hyperlink{classservice_1_1key__loading_1_1LocalKeyLoader_a24285076960c30178c83b6f59ade717f}{load\+Public\+Key}} (File file)  throws Invalid\+Key\+File\+Exception 
+\begin{DoxyCompactList}\small\item\em Loads a public key from the specified file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implementation of Key\+Loader interface for loading keys from PEM files. 
+
+This class is meant to be used for development purposes only and should not be used in production. It assumes that the keys are stored in PEM format and are not password-\/protected, as such the PIN for the private key file is never used. The class provides methods to load private and public keys from specified local PEM files. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classservice_1_1key__loading_1_1LocalKeyLoader_a9507a66b785c11a0694f797796069f8c}\label{classservice_1_1key__loading_1_1LocalKeyLoader_a9507a66b785c11a0694f797796069f8c} 
+\index{service.key\_loading.LocalKeyLoader@{service.key\_loading.LocalKeyLoader}!loadPrivateKey@{loadPrivateKey}}
+\index{loadPrivateKey@{loadPrivateKey}!service.key\_loading.LocalKeyLoader@{service.key\_loading.LocalKeyLoader}}
+\doxysubsubsection{\texorpdfstring{loadPrivateKey()}{loadPrivateKey()}}
+{\footnotesize\ttfamily Private\+Key service.\+key\+\_\+loading.\+Local\+Key\+Loader.\+load\+Private\+Key (\begin{DoxyParamCaption}\item[{File}]{file,  }\item[{String}]{pin }\end{DoxyParamCaption}) throws Invalid\+Key\+File\+Exception}
+
+
+
+Loads a private key from the specified file using the provided PIN. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & The file from which the private key is to be loaded. \\
+\hline
+{\em pin} & The PIN used to access the private key. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The loaded Private\+Key. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Invalid\+Key\+File\+Exception} & If an error occurs while loading the private key. \\
+\hline
+\end{DoxyExceptions}
+
+
+Implements \mbox{\hyperlink{interfaceservice_1_1key__loading_1_1KeyLoader_a9a5d4ad81ebd9fcd0e03649a4c46e1e4}{service.\+key\+\_\+loading.\+Key\+Loader}}.
+
+\Hypertarget{classservice_1_1key__loading_1_1LocalKeyLoader_a24285076960c30178c83b6f59ade717f}\label{classservice_1_1key__loading_1_1LocalKeyLoader_a24285076960c30178c83b6f59ade717f} 
+\index{service.key\_loading.LocalKeyLoader@{service.key\_loading.LocalKeyLoader}!loadPublicKey@{loadPublicKey}}
+\index{loadPublicKey@{loadPublicKey}!service.key\_loading.LocalKeyLoader@{service.key\_loading.LocalKeyLoader}}
+\doxysubsubsection{\texorpdfstring{loadPublicKey()}{loadPublicKey()}}
+{\footnotesize\ttfamily Public\+Key service.\+key\+\_\+loading.\+Local\+Key\+Loader.\+load\+Public\+Key (\begin{DoxyParamCaption}\item[{File}]{file }\end{DoxyParamCaption}) throws Invalid\+Key\+File\+Exception}
+
+
+
+Loads a public key from the specified file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & The file from which the public key is to be loaded. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The loaded Public\+Key. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Invalid\+Key\+File\+Exception} & If an error occurs while loading the public key. \\
+\hline
+\end{DoxyExceptions}
+
+
+Implements \mbox{\hyperlink{interfaceservice_1_1key__loading_1_1KeyLoader_a70371b09b121f489c95885eba699ef0a}{service.\+key\+\_\+loading.\+Key\+Loader}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+main-\/app/src/main/java/service/key\+\_\+loading/\mbox{\hyperlink{LocalKeyLoader_8java}{Local\+Key\+Loader.\+java}}\end{DoxyCompactItemize}

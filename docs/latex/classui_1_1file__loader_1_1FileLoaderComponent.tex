@@ -1,0 +1,106 @@
+\doxysection{ui.\+file\+\_\+loader.\+File\+Loader\+Component Class Reference}
+\hypertarget{classui_1_1file__loader_1_1FileLoaderComponent}{}\label{classui_1_1file__loader_1_1FileLoaderComponent}\index{ui.file\_loader.FileLoaderComponent@{ui.file\_loader.FileLoaderComponent}}
+
+
+Component for loading files with a specific extension filter and verification.  
+
+
+
+
+Inheritance diagram for ui.\+file\+\_\+loader.\+File\+Loader\+Component\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=212pt]{classui_1_1file__loader_1_1FileLoaderComponent__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for ui.\+file\+\_\+loader.\+File\+Loader\+Component\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=212pt]{classui_1_1file__loader_1_1FileLoaderComponent__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classui_1_1file__loader_1_1FileLoaderComponent_a12786dcc10b8c4177910f7fbb15e2139}{File\+Loader\+Component}} (String button\+Text, File\+Name\+Extension\+Filter extension\+Filter, \mbox{\hyperlink{interfaceui_1_1file__loader_1_1FileLoadTester}{File\+Load\+Tester}} verifier)
+\begin{DoxyCompactList}\small\item\em Constructor for File\+Loader\+Component. \end{DoxyCompactList}\item 
+File \mbox{\hyperlink{classui_1_1file__loader_1_1FileLoaderComponent_ad287610b3dda0d5ad6b01e644b4dd82a}{get\+File}} ()
+\begin{DoxyCompactList}\small\item\em Gets the selected file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classui_1_1file__loader_1_1FileLoaderComponent_a88bb0167d60fe41c7282d4c8ad0827f1}{clear}} ()
+\begin{DoxyCompactList}\small\item\em Clears the selected file and resets the label. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classui_1_1file__loader_1_1FileLoaderComponent_a602d728eba244fb8809878d2d17fcea5}{invalidate\+File}} ()
+\begin{DoxyCompactList}\small\item\em Invalidates the selected file and sets the label to a negative message. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Component for loading files with a specific extension filter and verification. 
+
+This class provides a UI component for selecting files, verifying them, and displaying the status. Uses the provided File\+Load\+Tester to validate the selected file. If the file is valid, it updates the label to show the file name and a success message and provides the file with get\+File(). If the file is invalid, it shows an error message and resets the file selection. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classui_1_1file__loader_1_1FileLoaderComponent_a12786dcc10b8c4177910f7fbb15e2139}\label{classui_1_1file__loader_1_1FileLoaderComponent_a12786dcc10b8c4177910f7fbb15e2139} 
+\index{ui.file\_loader.FileLoaderComponent@{ui.file\_loader.FileLoaderComponent}!FileLoaderComponent@{FileLoaderComponent}}
+\index{FileLoaderComponent@{FileLoaderComponent}!ui.file\_loader.FileLoaderComponent@{ui.file\_loader.FileLoaderComponent}}
+\doxysubsubsection{\texorpdfstring{FileLoaderComponent()}{FileLoaderComponent()}}
+{\footnotesize\ttfamily ui.\+file\+\_\+loader.\+File\+Loader\+Component.\+File\+Loader\+Component (\begin{DoxyParamCaption}\item[{String}]{button\+Text,  }\item[{File\+Name\+Extension\+Filter}]{extension\+Filter,  }\item[{\mbox{\hyperlink{interfaceui_1_1file__loader_1_1FileLoadTester}{File\+Load\+Tester}}}]{verifier }\end{DoxyParamCaption})}
+
+
+
+Constructor for File\+Loader\+Component. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em button\+Text} & The text to display on the browse button. \\
+\hline
+{\em extension\+Filter} & The file extension filter to apply in the file chooser. \\
+\hline
+{\em verifier} & The verifier to test the selected file. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classui_1_1file__loader_1_1FileLoaderComponent_a88bb0167d60fe41c7282d4c8ad0827f1}\label{classui_1_1file__loader_1_1FileLoaderComponent_a88bb0167d60fe41c7282d4c8ad0827f1} 
+\index{ui.file\_loader.FileLoaderComponent@{ui.file\_loader.FileLoaderComponent}!clear@{clear}}
+\index{clear@{clear}!ui.file\_loader.FileLoaderComponent@{ui.file\_loader.FileLoaderComponent}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily void ui.\+file\+\_\+loader.\+File\+Loader\+Component.\+clear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Clears the selected file and resets the label. 
+
+\Hypertarget{classui_1_1file__loader_1_1FileLoaderComponent_ad287610b3dda0d5ad6b01e644b4dd82a}\label{classui_1_1file__loader_1_1FileLoaderComponent_ad287610b3dda0d5ad6b01e644b4dd82a} 
+\index{ui.file\_loader.FileLoaderComponent@{ui.file\_loader.FileLoaderComponent}!getFile@{getFile}}
+\index{getFile@{getFile}!ui.file\_loader.FileLoaderComponent@{ui.file\_loader.FileLoaderComponent}}
+\doxysubsubsection{\texorpdfstring{getFile()}{getFile()}}
+{\footnotesize\ttfamily File ui.\+file\+\_\+loader.\+File\+Loader\+Component.\+get\+File (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets the selected file. 
+
+\begin{DoxyReturn}{Returns}
+The selected file. 
+\end{DoxyReturn}
+\Hypertarget{classui_1_1file__loader_1_1FileLoaderComponent_a602d728eba244fb8809878d2d17fcea5}\label{classui_1_1file__loader_1_1FileLoaderComponent_a602d728eba244fb8809878d2d17fcea5} 
+\index{ui.file\_loader.FileLoaderComponent@{ui.file\_loader.FileLoaderComponent}!invalidateFile@{invalidateFile}}
+\index{invalidateFile@{invalidateFile}!ui.file\_loader.FileLoaderComponent@{ui.file\_loader.FileLoaderComponent}}
+\doxysubsubsection{\texorpdfstring{invalidateFile()}{invalidateFile()}}
+{\footnotesize\ttfamily void ui.\+file\+\_\+loader.\+File\+Loader\+Component.\+invalidate\+File (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Invalidates the selected file and sets the label to a negative message. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+main-\/app/src/main/java/ui/file\+\_\+loader/\mbox{\hyperlink{FileLoaderComponent_8java}{File\+Loader\+Component.\+java}}\end{DoxyCompactItemize}

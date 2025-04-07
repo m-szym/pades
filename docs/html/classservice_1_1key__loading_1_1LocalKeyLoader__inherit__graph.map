@@ -1,0 +1,5 @@
+<map id="service.key_loading.LocalKeyLoader" name="service.key_loading.LocalKeyLoader">
+<area shape="rect" id="Node000001" title="Implementation of KeyLoader interface for loading keys from PEM files." alt="" coords="22,79,211,119"/>
+<area shape="rect" id="Node000002" href="$interfaceservice_1_1key__loading_1_1KeyLoader.html" title="Interface for loading cryptographic keys from files." alt="" coords="5,5,228,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="119,44,119,79,114,79,114,44"/>
+</map>
