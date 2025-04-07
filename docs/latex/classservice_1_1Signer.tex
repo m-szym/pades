@@ -1,0 +1,63 @@
+\doxysection{service.\+Signer Class Reference}
+\hypertarget{classservice_1_1Signer}{}\label{classservice_1_1Signer}\index{service.Signer@{service.Signer}}
+
+
+Service class for signing PDF documents with RSA private keys.  
+
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{classservice_1_1Signer_a20cef2c163fb67034ac6faa500f8abf0}{sign}} (File input\+Doc, Private\+Key key, PDSignature signature, File output\+Doc)  throws Signing\+Exception, Invalid\+Key\+Exception, Pdf\+File\+Opening\+Exception, Pdf\+File\+Saving\+Exception, File\+Not\+Found\+Exception 
+\begin{DoxyCompactList}\small\item\em Signs a PDF file with the given private key and signature. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Service class for signing PDF documents with RSA private keys. 
+
+This class provides functionality to sign PDF documents using provided RSA private key and configured signature object. It handles the signing process, including loading the PDF document, applying the signature, and saving the signed document. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classservice_1_1Signer_a20cef2c163fb67034ac6faa500f8abf0}\label{classservice_1_1Signer_a20cef2c163fb67034ac6faa500f8abf0} 
+\index{service.Signer@{service.Signer}!sign@{sign}}
+\index{sign@{sign}!service.Signer@{service.Signer}}
+\doxysubsubsection{\texorpdfstring{sign()}{sign()}}
+{\footnotesize\ttfamily static void service.\+Signer.\+sign (\begin{DoxyParamCaption}\item[{File}]{input\+Doc,  }\item[{Private\+Key}]{key,  }\item[{PDSignature}]{signature,  }\item[{File}]{output\+Doc }\end{DoxyParamCaption}) throws Signing\+Exception, Invalid\+Key\+Exception, Pdf\+File\+Opening\+Exception, Pdf\+File\+Saving\+Exception, File\+Not\+Found\+Exception\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Signs a PDF file with the given private key and signature. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em input\+Doc} & The PDF file to be signed. \\
+\hline
+{\em key} & The file containing the private key to be used for signing. \\
+\hline
+{\em signature} & The configured signature to be applied to the PDF. \\
+\hline
+{\em output\+Doc} & The output file where the signed PDF will be saved.\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Signing\+Exception} & If an error occurs during the signing process. \\
+\hline
+{\em Invalid\+Key\+Exception} & If the provided private key is invalid. \\
+\hline
+{\em Pdf\+File\+Opening\+Exception} & If the PDF file cannot be opened. \\
+\hline
+{\em Pdf\+File\+Saving\+Exception} & If the PDF file cannot be saved. \\
+\hline
+{\em File\+Not\+Found\+Exception} & If the output file cannot be found. \\
+\hline
+{\em Illegal\+State\+Exception} & If any of the required input parameters are null. \\
+\hline
+{\em Run\+Time\+Exception} & If the signing algorithm is not available (should never happen). \\
+\hline
+\end{DoxyExceptions}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+main-\/app/src/main/java/service/\mbox{\hyperlink{Signer_8java}{Signer.\+java}}\end{DoxyCompactItemize}

@@ -1,0 +1,71 @@
+\doxysection{org.\+example.\+\_\+2ndapp.\+Key\+Generator\+App Class Reference}
+\hypertarget{classorg_1_1example_1_1__2ndapp_1_1KeyGeneratorApp}{}\label{classorg_1_1example_1_1__2ndapp_1_1KeyGeneratorApp}\index{org.example.\_2ndapp.KeyGeneratorApp@{org.example.\_2ndapp.KeyGeneratorApp}}
+
+
+A utility class for RSA key generation and encoding.  
+
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static Key\+Pair \mbox{\hyperlink{classorg_1_1example_1_1__2ndapp_1_1KeyGeneratorApp_aca16a63e37c219a5ec7d95d9cc21f62d}{generate\+RSAKey\+Pair}} ()  throws No\+Such\+Algorithm\+Exception, No\+Such\+Provider\+Exception, Invalid\+Algorithm\+Parameter\+Exception 
+\begin{DoxyCompactList}\small\item\em Generates an RSA key pair. \end{DoxyCompactList}\item 
+static String \mbox{\hyperlink{classorg_1_1example_1_1__2ndapp_1_1KeyGeneratorApp_a536535b46603e09d28430b65d9c4a96c}{encode\+Key\+To\+Base64}} (Key key)
+\begin{DoxyCompactList}\small\item\em Encodes a key to Base64 format. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A utility class for RSA key generation and encoding. 
+
+This class uses the Bouncy\+Castle library to generate RSA key pairs and provides functionality to encode keys in Base64 format. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classorg_1_1example_1_1__2ndapp_1_1KeyGeneratorApp_a536535b46603e09d28430b65d9c4a96c}\label{classorg_1_1example_1_1__2ndapp_1_1KeyGeneratorApp_a536535b46603e09d28430b65d9c4a96c} 
+\index{org.example.\_2ndapp.KeyGeneratorApp@{org.example.\_2ndapp.KeyGeneratorApp}!encodeKeyToBase64@{encodeKeyToBase64}}
+\index{encodeKeyToBase64@{encodeKeyToBase64}!org.example.\_2ndapp.KeyGeneratorApp@{org.example.\_2ndapp.KeyGeneratorApp}}
+\doxysubsubsection{\texorpdfstring{encodeKeyToBase64()}{encodeKeyToBase64()}}
+{\footnotesize\ttfamily static String org.\+example.\+\_\+2ndapp.\+Key\+Generator\+App.\+encode\+Key\+To\+Base64 (\begin{DoxyParamCaption}\item[{Key}]{key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Encodes a key to Base64 format. 
+
+This method converts the provided cryptographic key to a Base64-\/encoded string.
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & The cryptographic key to encode.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A Base64-\/encoded string representation of the key. 
+\end{DoxyReturn}
+\Hypertarget{classorg_1_1example_1_1__2ndapp_1_1KeyGeneratorApp_aca16a63e37c219a5ec7d95d9cc21f62d}\label{classorg_1_1example_1_1__2ndapp_1_1KeyGeneratorApp_aca16a63e37c219a5ec7d95d9cc21f62d} 
+\index{org.example.\_2ndapp.KeyGeneratorApp@{org.example.\_2ndapp.KeyGeneratorApp}!generateRSAKeyPair@{generateRSAKeyPair}}
+\index{generateRSAKeyPair@{generateRSAKeyPair}!org.example.\_2ndapp.KeyGeneratorApp@{org.example.\_2ndapp.KeyGeneratorApp}}
+\doxysubsubsection{\texorpdfstring{generateRSAKeyPair()}{generateRSAKeyPair()}}
+{\footnotesize\ttfamily static Key\+Pair org.\+example.\+\_\+2ndapp.\+Key\+Generator\+App.\+generate\+RSAKey\+Pair (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) throws No\+Such\+Algorithm\+Exception, No\+Such\+Provider\+Exception, Invalid\+Algorithm\+Parameter\+Exception\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Generates an RSA key pair. 
+
+This method generates a 4096-\/bit RSA key pair using the Bouncy\+Castle provider.
+
+\begin{DoxyReturn}{Returns}
+A {\ttfamily Key\+Pair} object containing the generated RSA public and private keys.
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No\+Such\+Algorithm\+Exception} & If the RSA algorithm is not available. \\
+\hline
+{\em No\+Such\+Provider\+Exception} & If the Bouncy\+Castle provider is not available. \\
+\hline
+{\em Invalid\+Algorithm\+Parameter\+Exception} & If the RSA key generation parameters are invalid. \\
+\hline
+\end{DoxyExceptions}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\+\_\+2nd-\/app/src/main/java/org/example/\+\_\+2ndapp/\mbox{\hyperlink{KeyGeneratorApp_8java}{Key\+Generator\+App.\+java}}\end{DoxyCompactItemize}

@@ -1,0 +1,83 @@
+\doxysection{org.\+example.\+\_\+2ndapp.\+Encryption\+Util Class Reference}
+\hypertarget{classorg_1_1example_1_1__2ndapp_1_1EncryptionUtil}{}\label{classorg_1_1example_1_1__2ndapp_1_1EncryptionUtil}\index{org.example.\_2ndapp.EncryptionUtil@{org.example.\_2ndapp.EncryptionUtil}}
+
+
+A utility class for encryption operations.  
+
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static Secret\+Key \mbox{\hyperlink{classorg_1_1example_1_1__2ndapp_1_1EncryptionUtil_a8c3885350315711780d0e40c66efbf5c}{derive\+Key\+From\+Pin}} (String pin)  throws Exception 
+\begin{DoxyCompactList}\small\item\em Derives a Secret\+Key from a given PIN. \end{DoxyCompactList}\item 
+static String \mbox{\hyperlink{classorg_1_1example_1_1__2ndapp_1_1EncryptionUtil_a115f52330d3a80110e10031c146497b5}{encrypt\+Private\+Key}} (String private\+Key, String pin)  throws Exception 
+\begin{DoxyCompactList}\small\item\em Encrypts a private key using a PIN. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A utility class for encryption operations. 
+
+This class provides methods to\+:
+\begin{DoxyItemize}
+\item Derive a cryptographic key from a PIN using the SHA-\/256 hashing algorithm.
+\item Encrypt private keys using AES encryption and encode the result in Base64. 
+\end{DoxyItemize}
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classorg_1_1example_1_1__2ndapp_1_1EncryptionUtil_a8c3885350315711780d0e40c66efbf5c}\label{classorg_1_1example_1_1__2ndapp_1_1EncryptionUtil_a8c3885350315711780d0e40c66efbf5c} 
+\index{org.example.\_2ndapp.EncryptionUtil@{org.example.\_2ndapp.EncryptionUtil}!deriveKeyFromPin@{deriveKeyFromPin}}
+\index{deriveKeyFromPin@{deriveKeyFromPin}!org.example.\_2ndapp.EncryptionUtil@{org.example.\_2ndapp.EncryptionUtil}}
+\doxysubsubsection{\texorpdfstring{deriveKeyFromPin()}{deriveKeyFromPin()}}
+{\footnotesize\ttfamily static Secret\+Key org.\+example.\+\_\+2ndapp.\+Encryption\+Util.\+derive\+Key\+From\+Pin (\begin{DoxyParamCaption}\item[{String}]{pin }\end{DoxyParamCaption}) throws Exception\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Derives a Secret\+Key from a given PIN. 
+
+This method uses the SHA-\/256 hashing algorithm to generate a cryptographic key from the provided PIN. The resulting key is used for AES encryption.
+
+
+\begin{DoxyParams}{Parameters}
+{\em pin} & The PIN used to derive the encryption key.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A {\ttfamily Secret\+Key} object derived from the PIN.
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Exception} & If the SHA-\/256 hashing algorithm is not available. \\
+\hline
+\end{DoxyExceptions}
+\Hypertarget{classorg_1_1example_1_1__2ndapp_1_1EncryptionUtil_a115f52330d3a80110e10031c146497b5}\label{classorg_1_1example_1_1__2ndapp_1_1EncryptionUtil_a115f52330d3a80110e10031c146497b5} 
+\index{org.example.\_2ndapp.EncryptionUtil@{org.example.\_2ndapp.EncryptionUtil}!encryptPrivateKey@{encryptPrivateKey}}
+\index{encryptPrivateKey@{encryptPrivateKey}!org.example.\_2ndapp.EncryptionUtil@{org.example.\_2ndapp.EncryptionUtil}}
+\doxysubsubsection{\texorpdfstring{encryptPrivateKey()}{encryptPrivateKey()}}
+{\footnotesize\ttfamily static String org.\+example.\+\_\+2ndapp.\+Encryption\+Util.\+encrypt\+Private\+Key (\begin{DoxyParamCaption}\item[{String}]{private\+Key,  }\item[{String}]{pin }\end{DoxyParamCaption}) throws Exception\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Encrypts a private key using a PIN. 
+
+This method encrypts the provided private key using a {\ttfamily Secret\+Key} derived from the given PIN. The encryption algorithm used is AES, and the encrypted result is encoded in Base64 format.
+
+
+\begin{DoxyParams}{Parameters}
+{\em private\+Key} & The private key to be encrypted, provided as a plain string. \\
+\hline
+{\em pin} & The PIN used to derive the encryption key.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A Base64-\/encoded string representing the encrypted private key.
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Exception} & If an error occurs during encryption or key derivation. \\
+\hline
+\end{DoxyExceptions}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\+\_\+2nd-\/app/src/main/java/org/example/\+\_\+2ndapp/\mbox{\hyperlink{EncryptionUtil_8java}{Encryption\+Util.\+java}}\end{DoxyCompactItemize}

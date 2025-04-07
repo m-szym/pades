@@ -44,8 +44,7 @@ public class GUIController {
      *
      * This method generates an RSA key pair, encrypts the private key using the provided PIN,
      * and saves both the encrypted private key and the public key to files in a user-selected directory.
-     *
-     * \details
+     * Details:
      * - Prompts the user to enter a PIN.
      * - Validates that the PIN is not empty.
      * - Opens a directory chooser for the user to select a folder to save the keys.
@@ -53,9 +52,6 @@ public class GUIController {
      * - Encrypts the private key using the `EncryptionUtil` class.
      * - Saves the encrypted private key and public key to separate files.
      * - Updates the status label with success or error messages.
-     *
-     * \throws IOException If an error occurs while writing the keys to files.
-     * \throws Exception If an error occurs during key generation or encryption.
      */
     @FXML
     private void handleGenerateKeys() {
