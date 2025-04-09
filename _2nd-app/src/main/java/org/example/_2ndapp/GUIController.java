@@ -75,8 +75,8 @@ public class GUIController {
                 String publicKey = KeyGeneratorApp.encodeKeyToBase64(
                         keyPair.getPublic());
 
-                File outputFilePrivateKey = new File(selectedDirectory, "private_key.txt");
-                File outputFilePublicKey = new File(selectedDirectory, "public_key.txt");
+                File outputFilePrivateKey = new File(selectedDirectory, "private_key.pem");
+                File outputFilePublicKey = new File(selectedDirectory, "public_key.pem");
 
                 try (FileWriter fileWriter = new FileWriter(outputFilePrivateKey)) {
                     fileWriter.write(encryptedPrivateKey);
