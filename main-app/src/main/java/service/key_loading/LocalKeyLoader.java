@@ -31,7 +31,7 @@ public class LocalKeyLoader implements KeyLoader {
      * \return The loaded PrivateKey.
      * \throws InvalidKeyFileException If an error occurs while loading the private key.
      */
-    public PrivateKey loadPrivateKey(File file, String pin) throws InvalidKeyFileException {
+    public PrivateKey loadPrivateKey(File file, String pin) throws InvalidKeyFileException, InvalidKeyException {
         try {
             byte[] keyBytes = LocalKeyLoader.parseKey(file, "PRIVATE");
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");

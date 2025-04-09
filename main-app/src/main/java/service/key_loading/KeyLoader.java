@@ -3,6 +3,7 @@ package service.key_loading;
 import exceptions.InvalidKeyFileException;
 
 import java.io.File;
+import java.security.InvalidKeyException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
@@ -21,7 +22,7 @@ public interface KeyLoader {
      * \return The loaded PrivateKey.
      * \throws InvalidKeyFileException If an error occurs while loading the private key.
      */
-    PrivateKey loadPrivateKey(File file, String pin) throws InvalidKeyFileException;
+    PrivateKey loadPrivateKey(File file, String pin) throws InvalidKeyFileException, InvalidKeyException;
 
     /**
      * \brief Loads a public key from the specified file.

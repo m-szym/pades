@@ -49,28 +49,7 @@ public class Signer {
 
         try (PDDocument doc = PdfLoaderWrapper.loadPDF(inputDoc)) {
             // Create interface that will sign the document
-            SignatureInterface signer = content -> {
-                try {
-                    java.security.Signature signature1 = java.security.Signature.getInstance(SIGNATURE_ALGORITHM);
-                    signature1.initSign(key);
-                    signature1.update(content.readAllBytes());
-                    return signature1.sign();
-                } catch (NoSuchAlgorithmException e) {
-                    // This should never happen as the algorithm is hardcoded
-                    // and should be available in all JVMs
-                    // If it happens, it's a programming error
-                    throw new RuntimeException(e);
-                } catch (SignatureException e) {
-                    // Error occurred while signing the document
-                    throw new SigningException(e);
-                } catch (InvalidKeyException e) {
-                    // The private key is invalid
-                    // Recast the exception because the interface doesn't allow for the InvalidKeyException
-                    // if thrown the InvalidKeyFileException will be caught by the surrounding catch block of Signer::sign
-                    // and rethrown as an InvalidKeyException to the caller
-                    throw new InvalidKeyFileException(e);
-                }
-            };
+            SignatureInterface signer = getSignatureInterface(key);
             // Add the signature to the document
             try {
                 doc.addSignature(signature, signer);
@@ -102,5 +81,31 @@ public class Signer {
             // and rethrow them as PdfFileOpeningException to inform the caller of their origin
             throw new PdfFileOpeningException(e);
         }
+    }
+
+    private static SignatureInterface getSignatureInterface(PrivateKey key) {
+        SignatureInterface signer = content -> {
+            try {
+                java.security.Signature algorithm = java.security.Signature.getInstance(SIGNATURE_ALGORITHM);
+                algorithm.initSign(key);
+                algorithm.update(content.readAllBytes());
+                return algorithm.sign();
+            } catch (NoSuchAlgorithmException e) {
+                // This should never happen as the algorithm is hardcoded
+                // and should be available in all JVMs
+                // If it happens, it's a programming error
+                throw new RuntimeException(e);
+            } catch (SignatureException e) {
+                // Error occurred while signing the document
+                throw new SigningException(e);
+            } catch (InvalidKeyException e) {
+                // The private key is invalid
+                // Recast the exception because the interface doesn't allow for the InvalidKeyException
+                // if thrown the InvalidKeyFileException will be caught by the surrounding catch block of Signer::sign
+                // and rethrown as an InvalidKeyException to the caller
+                throw new InvalidKeyFileException(e);
+            }
+        };
+        return signer;
     }
 }

@@ -7,6 +7,7 @@ import exceptions.InvalidKeyFileException;
 import exceptions.PdfFileOpeningException;
 import exceptions.SignatureVerificationException;
 import service.key_loading.KeyLoader;
+import service.key_loading.LocalEncryptedKeyLoader;
 import service.key_loading.LocalKeyLoader;
 import ui.file_loader.PdfFileLoadTester;
 import service.Verifier;
@@ -35,7 +36,7 @@ public class VerifyFrame extends JFrame {
      * Initializes the components and builds the frame.
      */
     public VerifyFrame() {
-        keyLoader = new LocalKeyLoader();
+        keyLoader = new LocalEncryptedKeyLoader();
 
         // Build the frame
         initializeComponents();

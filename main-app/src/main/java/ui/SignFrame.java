@@ -5,6 +5,7 @@ import exceptions.PdfFileOpeningException;
 import exceptions.PdfFileSavingException;
 import exceptions.SigningException;
 import service.key_loading.KeyLoader;
+import service.key_loading.LocalEncryptedKeyLoader;
 import service.key_loading.LocalKeyLoader;
 import org.apache.pdfbox.pdmodel.interactive.digitalsignature.PDSignature;
 import ui.file_loader.PdfFileLoadTester;
@@ -39,8 +40,8 @@ public class SignFrame extends JFrame {
      * Initializes the components and builds the frame.
      */
     public SignFrame() {
-        keyLoader = new LocalKeyLoader();
-        privateKeyPIN = "";
+        keyLoader = new LocalEncryptedKeyLoader();
+        privateKeyPIN = "1234";
 
         initializeComponents();
         buildFrame();
@@ -88,9 +89,15 @@ public class SignFrame extends JFrame {
                 new FileNameExtensionFilter("PEM files", "pem"),
                 file -> {
                     try {
+                        String pin = JOptionPane.showInputDialog(this, "Enter the PIN for the private key:");
+                        if (pin == null || pin.isEmpty()) {
+                            return false;
+                        }
+                        privateKeyPIN = pin;
                         keyLoader.loadPrivateKey(file, privateKeyPIN);   // TODO: get PIN with dialog
                         return true;
-                    } catch (Exception e) {
+                    } catch (InvalidKeyException e) {
+                        reportError("Could not read the key\nPlease, try different PIN or key file");
                         return false;
                     }
                 });
@@ -132,10 +139,7 @@ public class SignFrame extends JFrame {
     private boolean sign(File outputFile) {
         try {
             // create and configure the signature
-            PDSignature signature = new PDSignature();
-            signature.setName("SIG TEST");
-            signature.setFilter(PDSignature.FILTER_ADOBE_PPKLITE);
-            signature.setSubFilter(PDSignature.SUBFILTER_ADBE_PKCS7_DETACHED);
+            PDSignature signature = generateSignature();
 
             // sign the file
             Signer.sign(inputPdfFileLoader.getFile(),
@@ -162,6 +166,18 @@ public class SignFrame extends JFrame {
             reportError("An unexpected error occurred\n" + e.getMessage());
         }
         return false;
+    }
+
+    /**
+     * \brief Generates a PDSignature object with default values.
+     * \return Configured PDSignature object.
+     */
+    private static PDSignature generateSignature() {
+        PDSignature signature = new PDSignature();
+        signature.setName("SIG TEST");
+        signature.setFilter(PDSignature.FILTER_ADOBE_PPKLITE);
+        signature.setSubFilter(PDSignature.SUBFILTER_ADBE_PKCS7_DETACHED);
+        return signature;
     }
 
     /**
