@@ -26,7 +26,7 @@ import java.security.InvalidKeyException;
  */
 public class SignFrame extends JFrame {
     private FileLoaderComponent inputPdfFileLoader;
-    private FileLoaderComponent keyFileLoader;
+//    private FileLoaderComponent keyFileLoader;
     private JButton signButton;
     private JButton backButton;
     private JTextArea aboutText;
@@ -65,7 +65,7 @@ public class SignFrame extends JFrame {
         JPanel fileLoadersPanel = new JPanel();
         fileLoadersPanel.setLayout(new GridLayout(2, 1));
         fileLoadersPanel.add(inputPdfFileLoader);
-        fileLoadersPanel.add(keyFileLoader);
+//        fileLoadersPanel.add(keyFileLoader);
         add(fileLoadersPanel, BorderLayout.NORTH);
 
         JPanel buttonPanel = new JPanel();
@@ -73,6 +73,36 @@ public class SignFrame extends JFrame {
         buttonPanel.add(signButton);
         buttonPanel.add(backButton);
         add(buttonPanel, BorderLayout.SOUTH);
+    }
+
+    private File findPrivateKeyOnUsb() throws FileNotFoundException {
+        File volumesDir = new File("/Volumes");
+        File[] mountedVolumes = volumesDir.listFiles();
+
+        if (mountedVolumes != null) {
+            for (File volume : mountedVolumes) {
+                File keyFile = new File(volume, "private_key.txt");
+                if (keyFile.exists() && keyFile.isFile()) {
+                    return keyFile;
+                }
+            }
+        }
+
+        throw new FileNotFoundException("private_key.txt not found on any USB drive.");
+    }
+
+    private String promptForPin() {
+        JPasswordField passwordField = new JPasswordField();
+        Object[] message = {
+                "Enter PIN for private key:", passwordField
+        };
+
+        int option = JOptionPane.showConfirmDialog(this, message, "Enter PIN", JOptionPane.OK_CANCEL_OPTION);
+        if (option == JOptionPane.OK_OPTION) {
+            return new String(passwordField.getPassword());
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -84,20 +114,20 @@ public class SignFrame extends JFrame {
         inputPdfFileLoader = new FileLoaderComponent("Load PDF to sign",
                 new FileNameExtensionFilter("PDF files", "pdf"),
                 new PdfFileLoadTester());
-        keyFileLoader = new FileLoaderComponent("Load private key",
-                new FileNameExtensionFilter("PEM files", "pem"),
-                file -> {
-                    try {
-                        keyLoader.loadPrivateKey(file, privateKeyPIN);   // TODO: get PIN with dialog
-                        return true;
-                    } catch (Exception e) {
-                        return false;
-                    }
-                });
+//        keyFileLoader = new FileLoaderComponent("Load private key",
+//                new FileNameExtensionFilter("TXT files", "txt"),
+//                file -> {
+//                    try {
+//                        keyLoader.loadPrivateKey(file, privateKeyPIN);   // TODO: get PIN with dialog
+//                        return true;
+//                    } catch (Exception e) {
+//                        return false;
+//                    }
+//                });
         signButton = new JButton("Sign PDF");
         signButton.addActionListener(e -> {
-            if (inputPdfFileLoader.getFile() == null || keyFileLoader.getFile() == null) {
-                reportError("Please select both a PDF file AND a private key file");
+            if (inputPdfFileLoader.getFile() == null) {
+                reportError("Please select PDF file");
                 return;
             }
 
@@ -131,6 +161,12 @@ public class SignFrame extends JFrame {
      */
     private boolean sign(File outputFile) {
         try {
+            String pin = promptForPin();
+            if (pin == null || pin.isEmpty()) {
+                reportError("PIN is required to sign the document.");
+            }
+            privateKeyPIN = pin;
+
             // create and configure the signature
             PDSignature signature = new PDSignature();
             signature.setName("SIG TEST");
@@ -139,14 +175,11 @@ public class SignFrame extends JFrame {
 
             // sign the file
             Signer.sign(inputPdfFileLoader.getFile(),
-                    keyLoader.loadPrivateKey(keyFileLoader.getFile(), privateKeyPIN),
+                    keyLoader.loadPrivateKey(findPrivateKeyOnUsb(), privateKeyPIN),
                     signature,
                     outputFile);
 
             return true;
-        } catch (InvalidKeyFileException e) {
-            keyFileLoader.invalidateFile();
-            reportError("Couldn't read the public key from provided file: " + keyFileLoader.getFile().getName() + "\n" + e.getMessage());
         } catch (PdfFileOpeningException e) {
             inputPdfFileLoader.invalidateFile();
             reportError("Couldn't open provided PDF file: " + inputPdfFileLoader.getFile().getName() + "\n" + e.getMessage());

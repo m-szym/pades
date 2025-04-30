@@ -2,8 +2,12 @@ package service.key_loading;
 
 import exceptions.InvalidKeyFileException;
 
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
@@ -24,6 +28,21 @@ import static java.nio.charset.Charset.defaultCharset;
  */
 public class LocalKeyLoader implements KeyLoader {
 
+    public static SecretKey deriveKeyFromPin(String pin) throws Exception {
+        MessageDigest sha = MessageDigest.getInstance("SHA-256");
+        byte[] key = sha.digest(pin.getBytes(StandardCharsets.UTF_8));
+
+        return new SecretKeySpec(key, "AES");
+    }
+
+    public static String decryptPrivateKey(String encryptedPrivateKey, String pin) throws Exception {
+        SecretKey secretKey = deriveKeyFromPin(pin);
+        Cipher cipher = Cipher.getInstance("AES");
+        cipher.init(Cipher.DECRYPT_MODE, secretKey);
+        byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedPrivateKey));
+        return new String(decryptedBytes);
+    }
+
     /**
      * \brief Loads a private key from the specified file using the provided PIN.
      * \param file The file from which the private key is to be loaded.
@@ -33,12 +52,15 @@ public class LocalKeyLoader implements KeyLoader {
      */
     public PrivateKey loadPrivateKey(File file, String pin) throws InvalidKeyFileException {
         try {
-            byte[] keyBytes = LocalKeyLoader.parseKey(file, "PRIVATE");
+            String encryptedKey = Files.readString(file.toPath());
+            String decryptedKey = LocalKeyLoader.decryptPrivateKey(encryptedKey, pin);
+            byte[] keyBytes = Base64.getDecoder().decode(decryptedKey);
+
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
             return keyFactory.generatePrivate(new PKCS8EncodedKeySpec(keyBytes));
         } catch (InvalidKeySpecException | IOException e) {
             throw new InvalidKeyFileException(e.getMessage());
-        } catch (NoSuchAlgorithmException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
