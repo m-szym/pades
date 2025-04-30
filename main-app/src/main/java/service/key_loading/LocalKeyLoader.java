@@ -28,6 +28,16 @@ import static java.nio.charset.Charset.defaultCharset;
  */
 public class LocalKeyLoader implements KeyLoader {
 
+    /**
+     * \brief Derives a symmetric AES key from a user-provided PIN.
+     *
+     * Uses SHA-256 to hash the PIN and create a 256-bit AES key. This key can then be used
+     * for encrypting or decrypting sensitive data, such as a private key.
+     *
+     * \param pin The PIN entered by the user.
+     * \return SecretKey derived from the provided PIN.
+     * \throws Exception If the SHA-256 algorithm is not available.
+     */
     public static SecretKey deriveKeyFromPin(String pin) throws Exception {
         MessageDigest sha = MessageDigest.getInstance("SHA-256");
         byte[] key = sha.digest(pin.getBytes(StandardCharsets.UTF_8));
@@ -35,6 +45,17 @@ public class LocalKeyLoader implements KeyLoader {
         return new SecretKeySpec(key, "AES");
     }
 
+    /**
+     * \brief Decrypts an encrypted private key using a PIN-derived AES key.
+     *
+     * Converts the encrypted private key from Base64, decrypts it using AES, and returns
+     * the original private key as a string.
+     *
+     * \param encryptedPrivateKey The Base64-encoded encrypted private key.
+     * \param pin The PIN used to derive the AES key for decryption.
+     * \return The decrypted private key as a plain text string.
+     * \throws Exception If decryption fails or the cipher cannot be initialized.
+     */
     public static String decryptPrivateKey(String encryptedPrivateKey, String pin) throws Exception {
         SecretKey secretKey = deriveKeyFromPin(pin);
         Cipher cipher = Cipher.getInstance("AES");

@@ -75,6 +75,16 @@ public class SignFrame extends JFrame {
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * \brief Searches for the private key file on connected USB drives.
+     *
+     * Iterates through all mounted volumes in the "/Volumes" directory (macOS-specific)
+     * and checks each volume for a file named "private_key.txt". If found, returns
+     * the file object pointing to it.
+     *
+     * \return File object representing the located private key.
+     * \throws FileNotFoundException if no "private_key.txt" is found on any mounted volume.
+     */
     private File findPrivateKeyOnUsb() throws FileNotFoundException {
         File volumesDir = new File("/Volumes");
         File[] mountedVolumes = volumesDir.listFiles();
@@ -91,6 +101,13 @@ public class SignFrame extends JFrame {
         throw new FileNotFoundException("private_key.txt not found on any USB drive.");
     }
 
+    /**
+     * \brief Prompts the user to enter the PIN for the private key.
+     *
+     * Displays a dialog with a password field where the user can securely input their PIN.
+     *
+     * \return The entered PIN as a string, or null if the user cancels the dialog.
+     */
     private String promptForPin() {
         JPasswordField passwordField = new JPasswordField();
         Object[] message = {
