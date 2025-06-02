@@ -81,7 +81,7 @@ public class VerifyFrame extends JFrame {
                 new FileNameExtensionFilter("PDF files", "pdf"),
                 new PdfFileLoadTester());
         keyFileLoader = new FileLoaderComponent("Load public key",
-                new FileNameExtensionFilter("PEM files", "pem"),
+                new FileNameExtensionFilter("txt files", "txt"),
                 file -> {
                     try {
                         keyLoader.loadPublicKey(file);

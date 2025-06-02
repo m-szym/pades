@@ -24,7 +24,7 @@ import org.apache.pdfbox.pdmodel.interactive.digitalsignature.PDSignature;
  * This class provides functionality to verify signatures in PDF documents using a specified public key.
  */
 public class Verifier {
-    public static final int KEY_SIZE = 1024;
+    public static final int KEY_SIZE = 4096;
     public static final String ALGORITHM = "SHA256withRSA";
 
     /**
