@@ -2,8 +2,12 @@ package service.key_loading;
 
 import exceptions.InvalidKeyFileException;
 
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
@@ -25,6 +29,42 @@ import static java.nio.charset.Charset.defaultCharset;
 public class LocalKeyLoader implements KeyLoader {
 
     /**
+     * \brief Derives a symmetric AES key from a user-provided PIN.
+     *
+     * Uses SHA-256 to hash the PIN and create a 256-bit AES key. This key can then be used
+     * for encrypting or decrypting sensitive data, such as a private key.
+     *
+     * \param pin The PIN entered by the user.
+     * \return SecretKey derived from the provided PIN.
+     * \throws Exception If the SHA-256 algorithm is not available.
+     */
+    public static SecretKey deriveKeyFromPin(String pin) throws Exception {
+        MessageDigest sha = MessageDigest.getInstance("SHA-256");
+        byte[] key = sha.digest(pin.getBytes(StandardCharsets.UTF_8));
+
+        return new SecretKeySpec(key, "AES");
+    }
+
+    /**
+     * \brief Decrypts an encrypted private key using a PIN-derived AES key.
+     *
+     * Converts the encrypted private key from Base64, decrypts it using AES, and returns
+     * the original private key as a string.
+     *
+     * \param encryptedPrivateKey The Base64-encoded encrypted private key.
+     * \param pin The PIN used to derive the AES key for decryption.
+     * \return The decrypted private key as a plain text string.
+     * \throws Exception If decryption fails or the cipher cannot be initialized.
+     */
+    public static String decryptPrivateKey(String encryptedPrivateKey, String pin) throws Exception {
+        SecretKey secretKey = deriveKeyFromPin(pin);
+        Cipher cipher = Cipher.getInstance("AES");
+        cipher.init(Cipher.DECRYPT_MODE, secretKey);
+        byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedPrivateKey));
+        return new String(decryptedBytes);
+    }
+
+    /**
      * \brief Loads a private key from the specified file using the provided PIN.
      * \param file The file from which the private key is to be loaded.
      * \param pin The PIN used to access the private key.
@@ -33,12 +73,15 @@ public class LocalKeyLoader implements KeyLoader {
      */
     public PrivateKey loadPrivateKey(File file, String pin) throws InvalidKeyFileException {
         try {
-            byte[] keyBytes = LocalKeyLoader.parseKey(file, "PRIVATE");
+            String encryptedKey = Files.readString(file.toPath());
+            String decryptedKey = LocalKeyLoader.decryptPrivateKey(encryptedKey, pin);
+            byte[] keyBytes = Base64.getDecoder().decode(decryptedKey);
+
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
             return keyFactory.generatePrivate(new PKCS8EncodedKeySpec(keyBytes));
         } catch (InvalidKeySpecException | IOException e) {
             throw new InvalidKeyFileException(e.getMessage());
-        } catch (NoSuchAlgorithmException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
