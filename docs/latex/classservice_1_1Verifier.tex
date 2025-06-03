@@ -1,0 +1,82 @@
+\doxysection{service.\+Verifier Class Reference}
+\hypertarget{classservice_1_1Verifier}{}\label{classservice_1_1Verifier}\index{service.Verifier@{service.Verifier}}
+
+
+Service class for verifying signatures in PDF documents.  
+
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static boolean \mbox{\hyperlink{classservice_1_1Verifier_aab745f2bc3a83386e641ad6515007b41}{verify}} (File input\+Doc, Public\+Key key)  throws Invalid\+Key\+Exception, Signature\+Verification\+Exception, Pdf\+File\+Opening\+Exception, Pdf\+File\+Reading\+Exception 
+\begin{DoxyCompactList}\small\item\em Verifies the signature of a PDF file with the given public key. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static final int \mbox{\hyperlink{classservice_1_1Verifier_a3e5fd9bc33ed2deb05b0be65c24532ff}{KEY\+\_\+\+SIZE}} = 4096
+\item 
+static final String \mbox{\hyperlink{classservice_1_1Verifier_af90b4af0f91c13d76cff68a3c390e741}{ALGORITHM}} = "{}SHA256with\+RSA"{}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Service class for verifying signatures in PDF documents. 
+
+This class provides functionality to verify signatures in PDF documents using a specified public key. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classservice_1_1Verifier_aab745f2bc3a83386e641ad6515007b41}\label{classservice_1_1Verifier_aab745f2bc3a83386e641ad6515007b41} 
+\index{service.Verifier@{service.Verifier}!verify@{verify}}
+\index{verify@{verify}!service.Verifier@{service.Verifier}}
+\doxysubsubsection{\texorpdfstring{verify()}{verify()}}
+{\footnotesize\ttfamily static boolean service.\+Verifier.\+verify (\begin{DoxyParamCaption}\item[{File}]{input\+Doc,  }\item[{Public\+Key}]{key }\end{DoxyParamCaption}) throws Invalid\+Key\+Exception, Signature\+Verification\+Exception, Pdf\+File\+Opening\+Exception, Pdf\+File\+Reading\+Exception\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Verifies the signature of a PDF file with the given public key. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em input\+Doc} & The PDF file to be verified. \\
+\hline
+{\em key} & The file containing the public key to be used for verification.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the signature is valid, false otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Invalid\+Key\+Exception} & If the provided public key is invalid. \\
+\hline
+{\em Signature\+Verification\+Exception} & If an error occurs during the signature verification process. \\
+\hline
+{\em Pdf\+File\+Opening\+Exception} & If the PDF file cannot be opened. \\
+\hline
+{\em Pdf\+File\+Reading\+Exception} & If the PDF file cannot be read. \\
+\hline
+{\em Runtime\+Exception} & If the signature algorithm is not available (should never happen). \\
+\hline
+{\em Illegal\+State\+Exception} & If any of the required input parameters are null. \\
+\hline
+\end{DoxyExceptions}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classservice_1_1Verifier_af90b4af0f91c13d76cff68a3c390e741}\label{classservice_1_1Verifier_af90b4af0f91c13d76cff68a3c390e741} 
+\index{service.Verifier@{service.Verifier}!ALGORITHM@{ALGORITHM}}
+\index{ALGORITHM@{ALGORITHM}!service.Verifier@{service.Verifier}}
+\doxysubsubsection{\texorpdfstring{ALGORITHM}{ALGORITHM}}
+{\footnotesize\ttfamily final String service.\+Verifier.\+ALGORITHM = "{}SHA256with\+RSA"{}\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{classservice_1_1Verifier_a3e5fd9bc33ed2deb05b0be65c24532ff}\label{classservice_1_1Verifier_a3e5fd9bc33ed2deb05b0be65c24532ff} 
+\index{service.Verifier@{service.Verifier}!KEY\_SIZE@{KEY\_SIZE}}
+\index{KEY\_SIZE@{KEY\_SIZE}!service.Verifier@{service.Verifier}}
+\doxysubsubsection{\texorpdfstring{KEY\_SIZE}{KEY\_SIZE}}
+{\footnotesize\ttfamily final int service.\+Verifier.\+KEY\+\_\+\+SIZE = 4096\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+main-\/app/src/main/java/service/\mbox{\hyperlink{Verifier_8java}{Verifier.\+java}}\end{DoxyCompactItemize}
